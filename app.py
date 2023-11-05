@@ -14,9 +14,9 @@ def upload_form():
 
 @app.route('/', methods=['POST'])
 def upload_video():
-    file = request.files['file']
-    filename = secure_filename(file.filename)
-    file.save(os.path.join('static/', filename))
+	file = request.files['file']
+	filename = secure_filename(file.filename)
+	file.save(os.path.join('static/', filename))
 
 
 # Code for Project 265 Grayscale start here
@@ -27,32 +27,31 @@ def upload_video():
 	result = cv2.VideoWriter("static/"+"blackandwhite.mp4", cv2.VideoWriter_fourcc(*"mp4v"), 30, size, 0)
 
 	try:
-        while True:
-        	status, frame_image = source.read()
-        	gray = cv2.cvtColor(frame_image, cv2.COLOR_RGB2GRAY)
-        	result.write(gray)
-        	video_file = "blackandwhite.mp4"
-    except:
-        print("Completed reading all Frames from the Video")           
+		while True:
+			status, frame_image = source.read()
+			gray = cv2.cvtColor(frame_image, cv2.COLOR_RGB2GRAY)
+			result.write(gray)
+			video_file = "blackandwhite.mp4"
+	except:
+		print("Completed reading all Frames from the Video")           
 # Code for Project 265 end here
-
-    return render_template('upload.html', filename=filename)
+	return render_template('upload.html', filename=filename)
 
 
 
 # Code for Project 265 download funcion starts here
 @app.route("/download")
 def download_file():
-    converted_video_path = "static/blackandwhite.mp4"
-    return send_file(converted_video_path, as_attachment=True)
+	converted_video_path = "static/blackandwhite.mp4"
+	return send_file(converted_video_path, as_attachment=True)
 # Code for Project 265 download funcion ends here
 
 
 
 @app.route('/display/<filename>')
 def display_video(filename):
-    return redirect(url_for('static', filename=filename))
+	return redirect(url_for('static', filename=filename))
 
 
 if __name__ == "__main__":
-    app.run(debug=True)
+	app.run(debug=True)
